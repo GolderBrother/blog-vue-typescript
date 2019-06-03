@@ -5,9 +5,7 @@ TypeScript 具有类型系统，且是 JavaScript 的超集，TypeScript 在 201
 
 Vue3.0 将使用 TS 重写，重写后的 Vue3.0 将更好的支持 TS。2019 年 TypeScript 将会更加普及，能够熟练掌握 TS，并使用 TS 开发过项目，将更加成为前端开发者的优势。
 
-此项目是基于 Vue 全家桶 + TypeScript + Element-UI  的技术栈，且已经开源，github 地址 [blog-vue-typescript](https://github.com/biaochenxuying/blog-vue-typescript) 。
-
-项目详情请猛戳该文章： [Vue + TypeScript + Element 搭建简洁时尚的博客网站及踩坑记](https://biaochenxuying.cn/articleDetail?article_id=5c9d8ce5f181945ddd6b0ffc)
+此项目是基于 Vue GolderBrother + TypeScript + Element-UI  的技术栈，且已经开源，github 地址 [blog-vue-typescript](https://github.com/GolderBrother/blog-vue-typescript) 。
 
 
 ## 效果
@@ -24,7 +22,6 @@ Vue3.0 将使用 TS 重写，重写后的 Vue3.0 将更好的支持 TS。2019 �
 ![](https://upload-images.jianshu.io/upload_images/12890819-5370ed6dfbe61051.gif?imageMogr2/auto-orient/strip)
 
 
-完整效果请看：[https://biaochenxuying.cn](https://biaochenxuying.cn)
 
 
 ## 功能
@@ -70,7 +67,7 @@ Vue3.0 将使用 TS 重写，重写后的 Vue3.0 将更好的支持 TS。2019 �
 
 ``` 
  # clone
-git clone https://github.com/biaochenxuying/blog-vue-typescript.git
+git clone https://github.com/GolderBrother/blog-vue-typescript.git
 ```
 
 ```
@@ -97,9 +94,7 @@ npm run build
 - Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-如果要看有后台数据完整的效果，是要和后台项目  **[blog-node](https://github.com/biaochenxuying/blog-node)** 一起运行才行的，不然接口请求会失败。
-
-虽然引入了 mock 了，但是还没有时间做模拟数据，想看具体效果，请稳步到我的网站上查看 [https://biaochenxuying.cn](https://biaochenxuying.cn)
+如果要看有后台数据完整的效果，是要和后台项目  **[blog-node](https://github.com/GolderBrother/blog-node-eggjs)** 一起运行才行的，不然接口请求会失败。
 
 ## 项目地址与文档教程
 
@@ -112,18 +107,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 > [管理后台：https://github.com/GolderBrother/blog-react-admin](https://github.com/GolderBrother/blog-react-admin)
 
 > [后端：https://github.com/GolderBrother/blog-node-eggjs](https://github.com/GolderBrother/blog-node-eggjs)
-
-<!-- > [blog：https://github.com/biaochenxuying/blog](https://github.com/biaochenxuying/blog) -->
-
-<!-- **本博客系统的系列文章：**
-
-- 1. [react + node + express + ant + mongodb 的简洁兼时尚的博客网站](https://biaochenxuying.cn/articleDetail?article_id=5bf57a8f85e0f13af26e579b)
-- 2. [react + Ant Design + 支持 markdown 的 blog-react 项目文档说明](https://biaochenxuying.cn/articleDetail?article_id=5bf6bb5e85e0f13af26e57b7)
-- 3. [基于 node + express + mongodb 的 blog-node 项目文档说明](https://biaochenxuying.cn/articleDetail?article_id=5bf8c57185e0f13af26e7d0d)
-- 4. [服务器小白的我,是如何将node+mongodb项目部署在服务器上并进行性能优化的](https://biaochenxuying.cn/articleDetail?article_id=5bfa728bb54f044b4f9da240)
-- 5. [github 授权登录教程与如何设计第三方授权登录的用户表](https://biaochenxuying.cn/articleDetail?article_id=5c7bd34e42b55e2ecc90976d)
-- 6. [一次网站的性能优化之路 -- 天下武功，唯快不破](https://biaochenxuying.cn/articleDetail?article_id=5c8ca2d3b87b8a04f1860c9a)
-- 7. [Vue + TypeScript + Element 搭建简洁时尚的博客网站及踩坑记](https://biaochenxuying.cn/articleDetail?article_id=5c9d8ce5f181945ddd6b0ffc) -->
 
 
 ## 权衡
