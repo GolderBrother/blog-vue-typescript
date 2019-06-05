@@ -1,3 +1,4 @@
+import { Commit } from "vuex";
 import * as types from "../types";
 
 const initPageState = () => {
@@ -5,20 +6,40 @@ const initPageState = () => {
     userInfo: {
       _id: "",
       name: "",
-      avator: ""
+      avatar: ""
     }
   };
 };
-const user = {
-  state: initPageState(),
-  mutations: {
-    [types.SAVE_USER](state: any, pageState: any) {
-      for (const prop in pageState) {
-        state[prop] = pageState[prop];
-      }
+
+const state: any = initPageState();
+
+const mutations: any = {
+  [types.SAVE_USER](state: any, pageState: any) {
+    for (const prop in pageState) {
+      state.userInfo[prop] = pageState[prop];
     }
   },
-  actions: {}
+  [types.CLEAR_USER](state: any){
+    for (const key in state.userInfo) {
+      state.userInfo[key] = "";
+    }
+  }
+};
+
+const actions: any = {
+  saveUser(context: { commit: Commit }, params: object) {
+    context.commit(types.SAVE_USER, params);
+  },
+  clearUser(context: {commit: Commit}){
+    context.commit(types.CLEAR_USER);
+  }
+};
+
+const user = {
+  namespaced: true,
+  state,
+  mutations,
+  actions
 };
 
 export default user;

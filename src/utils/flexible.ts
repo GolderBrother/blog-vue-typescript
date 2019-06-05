@@ -1,8 +1,9 @@
 (function flexible(window, document) {
   let docEl = document.documentElement;
+  // 获取设备像素比(设备物理像素/设备独立像素)
   let dpr = window.devicePixelRatio || 1;
   // adjust body font size
-  function setBodyFontSize() {
+  function setBodyFontSize(): void {
     if (document.body) {
       document.body.style.fontSize = 12 * dpr + "px";
     } else {
@@ -11,7 +12,7 @@
   }
   setBodyFontSize();
   // set 1rem = viewWidth / 10
-  function setRemUnit() {
+  function setRemUnit() : void{
     let rem = docEl.clientWidth / 10;
     docEl.style.fontSize = rem + "px";
   }

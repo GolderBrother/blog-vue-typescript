@@ -1,11 +1,22 @@
 <template>
-  <el-dialog title="登录" :width="isMobile ? '90%' : '50%'" :visible="dialogVisible" @close="cancel">
+  <el-dialog :title="handleFlag === 'register' ? '注册' : '登录'" :width="isMobile ? '90%' : '50%'" :visible="dialogVisible" @close="cancel">
     <el-form>
       <el-formItem label="邮箱" :label-width="formLabelWidth">
-        <el-input v-model="params.email" placeholder="邮箱" autocomplete="off"></el-input>
+        <el-input
+          v-model="params.email"
+          placeholder="邮箱"
+          @keyup.enter.native="handleOk('login')"
+          autocomplete="off"
+        ></el-input>
       </el-formItem>
       <el-formItem label="密码" :label-width="formLabelWidth">
-        <el-input type="password" placeholder="密码" v-model="params.password" autocomplete="off"></el-input>
+        <el-input
+          type="password"
+          placeholder="密码"
+          v-model="params.password"
+          @keyup.enter.native="handleOk('login')"
+          autocomplete="off"
+        ></el-input>
       </el-formItem>
       <el-formItem v-if="handleFlag === 'register'" label="昵称" :label-width="formLabelWidth">
         <el-input v-model="params.name" placeholder="用户名或昵称" autocomplete="off"></el-input>
@@ -14,7 +25,7 @@
         <el-input v-model="params.phone" placeholder="手机号" autocomplete="off"></el-input>
       </el-formItem>
       <el-formItem v-if="handleFlag === 'register'" label="简介" :label-width="formLabelWidth">
-        <el-input v-model="params.desc" placeholder="个人简介" autocomplete="off"></el-input>
+        <el-input v-model="params.introduce" placeholder="个人简介" autocomplete="off"></el-input>
       </el-formItem>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -37,13 +48,22 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 import config from "@/utils/config";
 import * as StorageUtils from "@/utils/storage";
+import { MD5_SUFFIX, md5 } from "@/utils/utils";
 
+// 需要先定义一个命名空间,这里面的 string 是 你store 统一导出的 store的名称。
+const userModule = namespace("user");
 @Component({
   // components: {}
 })
 export default class RegisterAndLogin extends Vue {
+  // vuex
+  // https://blog.csdn.net/qq_33447462/article/details/85251527
+  @userModule.State(state => state.userInfo) userInfo;
+  @userModule.Action("saveUser") saveUser;
+
   @Prop({ default: false }) visible!: boolean;
   @Prop({ default: false }) handleFlag!: string;
   @Prop({ default: false }) isMobile!: string;
@@ -57,7 +77,7 @@ export default class RegisterAndLogin extends Vue {
     name: "",
     password: "",
     phone: "",
-    desc: ""
+    introduce: ""
   };
 
   // lifecycle hook
@@ -69,7 +89,7 @@ export default class RegisterAndLogin extends Vue {
   }
 
   // method
-  handleOAuth():void {
+  handleOAuth(): void {
     // 保存授权前的页面链接内容
     let preventHistory: object = {
       name: this.$route.name,
@@ -85,7 +105,7 @@ export default class RegisterAndLogin extends Vue {
   }
 
   handleOk(): void {
-    const reg = new RegExp(
+    const emailReg = new RegExp(
       "^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"
     ); //正则表达式
     if (!this.params.email) {
@@ -95,7 +115,7 @@ export default class RegisterAndLogin extends Vue {
         type: "warning"
       });
       return;
-    } else if (!reg.test(this.params.email)) {
+    } else if (!emailReg.test(this.params.email)) {
       this.$message({
         message: "请输入格式正确的邮箱！",
         type: "warning"
@@ -137,6 +157,7 @@ export default class RegisterAndLogin extends Vue {
   async submit(): Promise<boolean> {
     let res: any = "";
     this.btnLoading = true;
+    this.params.password = md5(MD5_SUFFIX + this.params.password);
     if (this.handleFlag === "register") {
       res = await this.$https.post(this.$urls.register, this.params);
     } else {
@@ -151,11 +172,14 @@ export default class RegisterAndLogin extends Vue {
           name: data.name,
           avatar: data.avatar
         };
-        this.$store.commit("SAVE_USER", {
-          userInfo
-        });
+        // this.$store.commit("SAVE_USER", {
+        //   userInfo
+        // });
         // window.sessionStorage.userInfo = JSON.stringify(userInfo);
         StorageUtils.Session.set("userInfo", userInfo);
+        // 保存到vuex中
+        this.saveUser(userInfo); // -> store.dispatch('saveUser', userInfo)
+        console.log("userInfo: %o", this.userInfo, userInfo);
         this.$message({
           message: res.data.message,
           type: "success"

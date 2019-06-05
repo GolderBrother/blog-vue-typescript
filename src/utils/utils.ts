@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 // fn是我们需要包装的事件回调, delay是时间间隔的阈值
 export function throttle(fn: Function, delay: number): Function {
   // last为上一次触发回调的时间, timer是定时器
@@ -122,7 +123,13 @@ export function getWindowHeight(): number {
     ? document.documentElement.clientHeight
     : document.body.clientHeight;
 }
-//// 时间 格式化成 2018-12-12 12:12:00
+
+// 补0
+function addZero(num: number = 0): string{
+  return num < 10 ? `0${num}` : num.toString();
+}
+
+// 时间 格式化成 2018-12-12 12:12:00
 export function timestampToTime(timestamp: any, dayMinSecFlag: boolean):string {
   const date = new Date(timestamp);
   const Y = date.getFullYear() + "-";
@@ -130,16 +137,19 @@ export function timestampToTime(timestamp: any, dayMinSecFlag: boolean):string {
     (date.getMonth() + 1 < 10
       ? "0" + (date.getMonth() + 1)
       : date.getMonth() + 1) + "-";
-  const D =
-    date.getDate() < 10 ? "0" + date.getDate() + " " : date.getDate() + " ";
-  const h =
-    date.getHours() < 10 ? "0" + date.getHours() + ":" : date.getHours() + ":";
-  const m =
-    date.getMinutes() < 10
-      ? "0" + date.getMinutes() + ":"
-      : date.getMinutes() + ":";
-  const s =
-    date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+  // const D =
+  //   date.getDate() < 10 ? "0" + date.getDate() + " " : date.getDate() + " ";
+  // const h =
+  //   date.getHours() < 10 ? "0" + date.getHours() + ":" : date.getHours() + ":";
+  // const m = date.getMinutes() < 10
+  //     ? "0" + date.getMinutes() + ":"
+  //     : date.getMinutes() + ":";
+  // const s =
+  //   date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+  const D = addZero(date.getDate()) + " ";
+  const h = addZero(date.getHours()) + ":";
+  const m = addZero(date.getMinutes()) + ":";
+  const s = addZero(date.getSeconds());
   if (!dayMinSecFlag) {
     return Y + M + D;
   }
@@ -148,9 +158,16 @@ export function timestampToTime(timestamp: any, dayMinSecFlag: boolean):string {
 
 //判断是移动端还是 pc 端 ，true 表示是移动端，false 表示是 pc 端
 export function isMobileOrPc(): boolean {
-  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    return true;
-  } else {
-    return false;
-  }
+  let isMobileOrPcFlag;
+  isMobileOrPcFlag = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
+  return isMobileOrPcFlag;
+}
+
+// md5前綴，用来加盐加密的字符按
+export const MD5_SUFFIX = 'www.golderBrother.cn*&^%$#';
+
+// md5加密
+export function md5 (pwd: string): string {
+  let md5 = crypto.createHash('md5');
+  return md5.update(pwd).digest('hex');
 }

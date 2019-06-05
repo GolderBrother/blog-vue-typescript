@@ -9,7 +9,7 @@
          class="item">
       <div class="item-header">
         <div class="author">
-          <div class="avator">
+          <div class="avatar">
             <img v-if="item.user.avatar.length < 10"
                  src="../assets/user.png"
                  alt="默认图片">
@@ -40,7 +40,7 @@
            class="item-other">
         <div class="item-header">
           <div class="author">
-            <div class="avator">
+            <div class="avatar">
               <img v-if="e.user.avatar.length < 10"
                    src="../assets/user.png"
                    alt="默认图片">
@@ -101,22 +101,22 @@ export default class CommentList extends Vue {
   comment_id: any = "";
   to_user: any = {};
 
-  formatTime(value: any) {
+  formatTime(value: any):string {
     return timestampToTime(value, true);
   }
 
-  handleCancel() {
+  handleCancel(): void {
     this.visible = false;
   }
 
   // @Emit("refreshArticle")
-  handleOk() {
+  handleOk(): void {
     this.visible = false;
     this.$emit("refreshArticle");
   }
 
   // 添加评论
-  showCommentModal(item: any, secondItem: any) {
+  showCommentModal(item: any, secondItem: any): boolean|undefined {
     // window.sessionStorage.userInfo
     if (!StorageUtils.Session.get("userInfo")) {
       this.$message({
@@ -181,7 +181,7 @@ export default class CommentList extends Vue {
         position: absolute;
         left: 0;
         display: inline-block;
-        .avator {
+        .avatar {
           display: inline-block;
           margin-right: 5px;
           width: 40px;
@@ -229,7 +229,7 @@ export default class CommentList extends Vue {
       position: absolute;
       left: 0;
       display: inline-block;
-      .avator {
+      .avatar {
         display: inline-block;
         margin-right: 5px;
         width: 38px;

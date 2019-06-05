@@ -18,10 +18,10 @@ if (process.env.NODE_ENV === "development") {
 // console.log('process.env.BASE_URL',process.env.BASE_URL)
 // request拦截器 axios的一些配置
 service.interceptors.request.use(
-  (config: any) => {
+  (config: any): any => {
     return config;
   },
-  (error: any) => {
+  (error: any): any => {
     // Do something with request error
     console.error("error:", error); // for debug
     Promise.reject(error);
@@ -30,10 +30,10 @@ service.interceptors.request.use(
 
 // respone拦截器 axios的一些配置
 service.interceptors.response.use(
-  (response: any) => {
+  (response: any): any => {
     return response;
   },
-  (error: any) => {
+  (error: any): Promise<any> => {
     console.error("error:" + error); // for debug
     return Promise.reject(error);
   }

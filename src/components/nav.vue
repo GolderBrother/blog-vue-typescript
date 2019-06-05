@@ -129,17 +129,24 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 import RegisterAndLogin from "@/components/registerAndLogin.vue";
 import { isMobileOrPc, getQueryStringByName } from "@/utils/utils";
 import { Route } from "vue-router";
 import * as StorageUtils from "@/utils/storage";
 
+const userModule = namespace("user");
 @Component({
   components: {
     RegisterAndLogin
   }
 })
 export default class Nav extends Vue {
+  // vuex-class
+  @userModule.State(state => state.userInfo) myUserInfo;
+  @userModule.Action("saveUser") saveUser; // 对应actions中的 saveUser
+  @userModule.Action("clearUser") clearUser; // 对应actions中的 clearUser
+
   // loading: boolean = false;
   visible: boolean = false;
   handleFlag: string = "";
@@ -200,19 +207,23 @@ export default class Nav extends Vue {
     let userInfo: any = {
       _id: "",
       name: "",
-      avator: ""
+      avatar: ""
     };
     // window.sessionStorage.userInfo
     if (StorageUtils.Session.get("userInfo")) {
       // userInfo = JSON.parse(window.sessionStorage.userInfo);
       userInfo = StorageUtils.Session.get("userInfo");
-      this.$store.commit("SAVE_USER", {
-        userInfo
-      });
+      // this.$store.commit("SAVE_USER", {
+      //   userInfo
+      // });
+      this.saveUser(userInfo); // -> store.dispatch('saveUser', userInfo)
     }
-    if (this.$store.state.user.userInfo) {
-      userInfo = this.$store.state.user.userInfo;
+    if (this.myUserInfo) {
+      userInfo = this.myUserInfo; // this.myUserInfo -> this.$store.state.user.userInfo
     }
+    // if (this.$store.state.user.userInfo) {
+    //   userInfo = this.$store.state.user.userInfo;
+    // }
     return userInfo;
   }
 
@@ -277,10 +288,12 @@ export default class Nav extends Vue {
           name: data.name,
           avatar: data.avatar
         };
-        this.$store.commit("SAVE_USER", {
-          userInfo
-        });
+        // this.$store.commit("SAVE_USER", {
+        //   userInfo
+        // });
         StorageUtils.Session.set("userInfo", userInfo);
+        // 保存到vuex中
+        this.saveUser(userInfo); // -> store.dispatch('saveUser', userInfo)
         // window.sessionStorage.userInfo = JSON.stringify(userInfo);
         this.$message({
           message: res.data.message,
@@ -315,13 +328,12 @@ export default class Nav extends Vue {
   handleLogout(): void {
     // window.sessionStorage.userInfo = "";
     StorageUtils.Session.set("userInfo", "");
-    this.$store.commit("SAVE_USER", {
-      userInfo: {
-        _id: "",
-        name: "",
-        avator: ""
-      }
-    });
+    // this.$store.commit("SAVE_USER", {
+    //   _id: "",
+    //   name: "",
+    //   avatar: ""
+    // });
+    this.clearUser(); // -> store.dispatch('clearUser', userInfo)
   }
 
   handleClick(value: string): void {

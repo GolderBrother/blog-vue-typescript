@@ -1,21 +1,13 @@
 <template>
-  <Dialog title="评论"          width="60%"
-          :visible="dialogVisible"
-          @close="cancel">
+  <Dialog title="评论" width="60%" :visible="dialogVisible" @close="cancel">
     <Form>
       <FormItem>
-        <Input type="textarea"
-               v-model="content"
-               placeholder="文明社会，理性评论"
-               autocomplete="off"></Input>
+        <Input type="textarea" v-model="content" placeholder="文明社会，理性评论" autocomplete="off"/>
       </FormItem>
     </Form>
-    <div slot="footer"
-         class="dialog-footer">
-      <Button type="default"
-              @click="cancel">取消</Button>
-      <Button type="primary"
-              @click="handleOk">确 定</Button>
+    <div slot="footer" class="dialog-footer">
+      <Button type="default" @click="cancel">取消</Button>
+      <Button type="primary" @click="handleOk">确 定</Button>
     </div>
   </Dialog>
 </template>
@@ -58,10 +50,10 @@ export default class Comment extends Vue {
 
   // this.$emit
   @Emit()
-  cancel() : void{}
+  cancel(): void {}
 
   @Emit("handleOk")
-  async handleOk():Promise<any> {
+  async handleOk(): Promise<any> {
     if (!this.article_id) {
       this.$message({
         message: "该文章不存在！",
@@ -77,7 +69,7 @@ export default class Comment extends Vue {
       return;
     }
     let user_id = "";
-    
+
     // window.sessionStorage.userInfo
     if (StorageUtils.Session.get("userInfo")) {
       // let userInfo = JSON.parse(StorageUtils.Session.get("userInfo"));

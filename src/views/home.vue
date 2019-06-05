@@ -1262,22 +1262,24 @@ export default class Home extends Vue {
     }
 
     function makeCanvasFullScreen(canvas: any) {
-      var b: any = document.body;
-      var d: any = document.documentElement;
-      let fullw = Math.max(
-        b.clientWidth,
-        b.scrollWidth,
-        d.scrollWidth,
-        d.clientWidth
-      );
-      let fullh = Math.max(
-        b.clientHeight,
-        b.scrollHeight,
-        d.scrollHeight,
-        d.clientHeight
-      );
-      canvas.width = fullw;
-      canvas.height = fullh;
+      if(canvas) {
+        var b: any = document.body;
+        var d: any = document.documentElement;
+        let fullw = Math.max(
+          b.clientWidth,
+          b.scrollWidth,
+          d.scrollWidth,
+          d.clientWidth
+        );
+        let fullh = Math.max(
+          b.clientHeight,
+          b.scrollHeight,
+          d.scrollHeight,
+          d.clientHeight
+        );
+        canvas.width = fullw;
+        canvas.height = fullh;
+      }
     }
 
     // window.addEventListener("load", function(e: any) {

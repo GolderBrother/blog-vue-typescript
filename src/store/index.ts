@@ -19,15 +19,15 @@ const store = new Vuex.Store({
   modules: {
     user
   },
-  state: initPageState(),
-  mutations: {
+  // state: initPageState(),
+  // mutations: {
     // [types.SET_USER](state, pageState = {}) {
     //   for (const prop in pageState) {
     //     state[prop] = pageState[prop];
     //   }
     // }
-  },
-  actions: {}
+  // },
+  // actions: {}
 });
 
 export default store;

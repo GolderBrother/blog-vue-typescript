@@ -108,6 +108,13 @@ export default class Slider extends Vue {
     -webkit-animation: mylogo 3s; /* Safari and Chrome */
     -o-animation: mylogo 3s; /* Opera */
     animation-iteration-count: infinite;
+    &:hover {
+      -webkit-transform: rotateZ(360deg);
+      -moz-transform: rotateZ(360deg);
+      -o-transform: rotateZ(360deg);
+      -ms-transform: rotateZ(360deg);
+      transform: rotateZ(360deg);
+    }
   }
   .title {
     font-size: 25px;
