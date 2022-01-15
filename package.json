@@ -15,7 +15,7 @@
     "crypto": "^1.0.1",
     "element-ui": "^2.6.3",
     "highlight.js": "^9.15.6",
-    "marked": "^0.6.1",
+    "marked": "^4.0.10",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
